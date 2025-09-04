@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice
+  namespace: microservices
+  labels: { app: microservice }
+  annotations:
+    # Make LB health probe hit one of the paths in the app
+    service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path: /products
+spec:
+  selector: { app: microservice }
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+  type: LoadBalancer
