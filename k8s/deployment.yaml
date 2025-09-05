@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: ACR_LOGIN_SERVER/myapp:latest
+          image: acrmsvc012345.azurecr.io/myapp:amd64-fix
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
