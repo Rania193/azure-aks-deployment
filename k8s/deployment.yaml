@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: acrmsvc012345.azurecr.io/myapp:latest
+          image: acrmsvc012345.azurecr.io/microservice:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
