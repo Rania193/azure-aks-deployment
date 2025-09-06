@@ -101,8 +101,8 @@ resource "azurerm_role_assignment" "aks_cluster_user" {
   principal_id         = module.github_oidc.service_principal.object_id
 }
 
-resource "azurerm_role_assignment" "aks_rbac_admin" {
+resource "azurerm_role_assignment" "aks_rbac_cluster_admin" {
   scope                = azurerm_kubernetes_cluster.aks.id
-  role_definition_name = "Azure Kubernetes Service RBAC Admin"
+  role_definition_name = "Azure Kubernetes Service RBAC Cluster Admin"
   principal_id         = module.github_oidc.service_principal.object_id
 }
