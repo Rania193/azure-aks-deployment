@@ -28,7 +28,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Docker login to ACR
-        run: az acr login -n ${{ secrets.ACR_NAME }}
+        run: az acr login -n ${{ secrets.ACR_LOGIN_SERVER }}
 
 
       - name: Build and push image
