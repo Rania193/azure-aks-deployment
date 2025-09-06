@@ -30,7 +30,7 @@ jobs:
         run: |
           az aks install-cli
           kubelogin --version
-          
+
       - name: Docker login to ACR
         run: az acr login -n ${{ secrets.ACR_LOGIN_SERVER }}
 
@@ -50,6 +50,12 @@ jobs:
         with:
           resource-group: ${{ secrets.AKS_RESOURCE_GROUP }}
           cluster-name: ${{ secrets.AKS_CLUSTER_NAME }}
+          
+      - name: Convert kubeconfig for azurecli exec
+        run: |
+          # aks-set-context sets KUBECONFIG to the temp file it created
+          echo "Using kubeconfig: $KUBECONFIG"
+          kubelogin convert-kubeconfig -l azurecli --kubeconfig "$KUBECONFIG"
 
       - name: Install kubectl
         uses: azure/setup-kubectl@v4
