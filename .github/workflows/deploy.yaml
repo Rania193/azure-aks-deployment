@@ -1,0 +1,70 @@
+name: Build & Deploy to AKS
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch: {}
+
+env:
+  IMAGE_NAME: microservice
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Docker login to ACR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Set AKS context
+        uses: azure/aks-set-context@v4
+        with:
+          resource-group: ${{ secrets.AKS_RESOURCE_GROUP }}
+          cluster-name: ${{ secrets.AKS_CLUSTER_NAME }}
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Create namespace (idempotent)
+        run: |
+          kubectl apply -f k8s/namespace.yaml
+
+      - name: Apply manifests
+        run: |
+          kubectl apply -f k8s/
+
+      - name: Update image to new SHA
+        run: |
+          kubectl -n microservices set image deployment/microservice app=${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Wait for rollout
+        run: |
+          kubectl -n microservices rollout status deploy/microservice --timeout=180s
+
+      - name: Show service external IP
+        run: |
+          kubectl -n microservices get svc microservice -o wide
