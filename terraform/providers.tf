@@ -28,18 +28,14 @@ features {
 
 # These two are configured from AKS kube_config once cluster is created
 provider "kubernetes" {
-host = azurerm_kubernetes_cluster.aks.kube_config[0].host
-client_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config[0].client_certificate)
-client_key = base64decode(azurerm_kubernetes_cluster.aks.kube_config[0].client_key)
-cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config[0].cluster_ca_certificate)
+    config_path    = "~/.kube/config"
+    config_context = "aks-microservices"
 }
 
 
 provider "helm" {
-kubernetes = {
-host = azurerm_kubernetes_cluster.aks.kube_config[0].host
-client_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config[0].client_certificate)
-client_key = base64decode(azurerm_kubernetes_cluster.aks.kube_config[0].client_key)
-cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config[0].cluster_ca_certificate)
-}
+    kubernetes = {
+        config_path    = "~/.kube/config"
+        config_context = "aks-microservices"
+    }
 }
