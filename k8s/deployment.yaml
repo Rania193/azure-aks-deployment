@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: acrmsvc012345.azurecr.io/myapp:amd64-fix
+          image: acrmsvc012345.azurecr.io/myapp:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
