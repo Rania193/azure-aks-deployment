@@ -95,7 +95,7 @@ resource "azurerm_role_assignment" "acr_push" {
   principal_id         = module.github_oidc.service_principal.object_id
 }
 
-resource "azurerm_role_assignment" "aks_rbac_writer" {
+resource "azurerm_role_assignment" "aks_cluster_user" {
   scope                = azurerm_kubernetes_cluster.aks.id
   role_definition_name = "Azure Kubernetes Service Cluster User Role"
   principal_id         = module.github_oidc.service_principal.object_id
