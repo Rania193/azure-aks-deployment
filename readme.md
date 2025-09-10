@@ -31,7 +31,7 @@ Monitoring is installed **manually** with Helm (Prometheus + Grafana), then a `S
     
 - **Terraform** ≥ 1.6
     
-- **kubectl** & **Helm** (for the manual monitoring part)
+- **kubectl** & **Helm**
 
 ----
 ## 1) Provision Azure (Terraform)
