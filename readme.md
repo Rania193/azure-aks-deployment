@@ -11,7 +11,7 @@ Monitoring is installed **manually** with Helm (Prometheus + Grafana), then a `S
     
 - **Azure AKS + ACR**
     
-- **GitHub Actions
+- **GitHub Actions**
     
 - **Docker**
     
@@ -19,25 +19,6 @@ Monitoring is installed **manually** with Helm (Prometheus + Grafana), then a `S
 
 - **Prometheus & Grafana**
 
-----
-## Repo layout (some highlighted files)
-
-```
-application/               # Flask app (two services)
-k8s/
-  deployment.yaml
-  service.yaml
-monitoring/
-  namespace.yaml           
-  values-monitoring.yaml   # values for kube-prometheus-stack
-  servicemonitor.yaml      # targets our app (requires Prometheus Operator)
-terraform/
-  main.tf                  # ACR, AKS, role assignments, OIDC module call
-  variables.tf
-  modules/github_oidc/     # community OIDC module (app + sp + federated cred)
-.github/workflows/
-  deploy.yaml              # CI/CD pipeline (build → push → deploy)
-```
 ----
 ## Prereqs
 
@@ -65,8 +46,6 @@ terraform apply
 What it does:
 
 - Creates RG, ACR, AKS
-    
-- Enables **Kubernetes RBAC** + **Azure RBAC for Kubernetes**
     
 - Grants:
     
