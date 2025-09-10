@@ -54,33 +54,6 @@ resource "azurerm_role_assignment" "acr_pull" {
     principal_id = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
 }
 
-
-# # === Monitoring: kube-prometheus-stack via Helm ===
-# resource "kubernetes_namespace" "monitoring" {
-#     metadata { name = "monitoring" }
-# }
-
-# resource "helm_release" "kube_prom_stack" {
-#     name = "kube-prometheus-stack"
-#     repository = "https://prometheus-community.github.io/helm-charts"
-#     chart = "kube-prometheus-stack"
-#     namespace = kubernetes_namespace.monitoring.metadata[0].name
-
-#     values = [
-#         yamlencode({
-#             grafana = {
-#             service = { type = "ClusterIP" }
-#             resources = { requests = { cpu = "50m", memory = "128Mi" }, limits = { cpu = "200m", memory = "256Mi" } }
-#             }
-#             prometheus = {
-#                 prometheusSpec = {
-#                 resources = { requests = { cpu = "100m", memory = "256Mi" }, limits = { cpu = "300m", memory = "512Mi" } }
-#                 }
-#             }
-#         })
-#     ]
-# }
-
 module "github_oidc" {
   source = "./modules/github_oidc"
   identity_name     = "gh-aks-deployer"
