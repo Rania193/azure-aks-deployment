@@ -128,3 +128,9 @@ terraform destroy -auto-approve
 ```
 
 ----
+## Results
+![Image Name](assets/Screenshot%202025-09-06%20at%205.56.55 PM.png)
+
+![Image Name](assets/Screenshot%202025-09-06%20at%205.57.18 PM.png)
+
+![Image Name](assets/Screenshot%202025-09-06%20at%206.00.58 PM.png)
