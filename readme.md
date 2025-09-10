@@ -2,7 +2,7 @@
 
 Deploy a Flask API (two endpoints: `/products`, `/users`) to **Azure Kubernetes Service (AKS)**.  
 Infra is provisioned with **Terraform**, CI/CD is via **GitHub Actions** using **OIDC** (no client secrets).  
-Monitoring is installed **manually** with Helm (Prometheus + Grafana), then a `ServiceMonitor` is applied.
+Monitoring is installed with Helm (Prometheus + Grafana), then a `ServiceMonitor` is applied.
 
 ----
 ## Tech Stack
