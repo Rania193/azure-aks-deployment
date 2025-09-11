@@ -17,7 +17,7 @@ Monitoring is installed with Helm (Prometheus + Grafana), then a `ServiceMonitor
     
 - **Kubernetes**
 
-- **Prometheus & Grafana**
+- **Prometheus & Grafana** 
 
 ----
 ## Prereqs
